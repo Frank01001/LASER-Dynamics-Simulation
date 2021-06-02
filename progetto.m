@@ -1,8 +1,11 @@
+clear;
+clc;
+
 %Constants
-TIME_STEPS = 100;
-LATTICE_WIDTH = 20;
-LATTICE_HEIGHT = 20;
-PHOTON_SATURATION = 20;
+TIME_STEPS = 500;
+LATTICE_WIDTH = 50;
+LATTICE_HEIGHT = 50;
+PHOTON_SATURATION = 10;
 
 %Counters
 populationCounter = zeros(TIME_STEPS);
@@ -18,10 +21,10 @@ currAutomaton = repmat(cell, LATTICE_WIDTH, LATTICE_HEIGHT);
 prevAutomaton = currAutomaton;
 
 %Input data
-electronLifeTime = 6;
-photonLifeTime = 2;
-pumpingProbability = 0.2;
-noiseProbability = 0.005;
+electronLifeTime = 180;
+photonLifeTime = 10;
+pumpingProbability = 0.01;
+noiseProbability = 0.0009;
 stimulatedEmissionThreshold = 1;
 
 %Time iteration
@@ -104,10 +107,10 @@ figure(1);
 hold on;box on;grid on
 title("Population inversion over time");
 plot(linspace(1, TIME_STEPS, TIME_STEPS), populationCounter);
-plot(linspace(1, TIME_STEPS, TIME_STEPS), photonCounter)
-legend('Population Inversion', 'Photon Count')
-xlabel('Time Step')
-ylabel('Population')
+plot(linspace(1, TIME_STEPS, TIME_STEPS), photonCounter);
+legend('Population Inversion', 'Photon Count');
+xlabel('Time Step');
+ylabel('Population');
 
 %Returns the number of photons in the adjacent cells using moore's
 %neighborhood rule
