@@ -1,0 +1,120 @@
+Standard 1:
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.01;
+stimulatedEmissionThreshold = 1;
+
+Standard 2: (high pumping)
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.5;
+noiseProbability = 0.01;
+stimulatedEmissionThreshold = 1;
+
+Standard 3: (low pumping = noise)
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.01;
+noiseProbability = 0.01;
+stimulatedEmissionThreshold = 1;
+
+Standard 4: (very low pumping = noise)
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.001;
+noiseProbability = 0.001;
+stimulatedEmissionThreshold = 1;
+
+Standard 5: (very low pumping and very very low noise)
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.001;
+noiseProbability = 0.00001;
+stimulatedEmissionThreshold = 1;
+
+Constant 1: -> very high lasering
+% Constant behavior input data
+time steps = 300; saturation = 50;
+electronLifeTime = 30;
+photonLifeTime = 40;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 1;
+
+Constant 2: -> under pumping threshold
+% Constant behavior input data
+time steps = 200; saturation = 10;
+electronLifeTime = 30;
+photonLifeTime = 2;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 1;
+
+Constant 3: -> almost on the threhsold
+% Constant behavior input data
+time steps = 200; saturation = 10;
+electronLifeTime = 30;
+photonLifeTime = 2;
+pumpingProbability = 0.6;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 1;
+
+Constant 4: -> normal
+% Constant behavior input data
+time steps = 200; saturation = 30;
+electronLifeTime = 10;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 1;
+
+Constant 5:
+% Constant behavior input data
+time steps = 200; saturation = 10;
+electronLifeTime = 100;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 1;
+
+Oscillatory 1:
+% Oscilaltory behavior input data
+electronLifeTime = 100;
+photonLifeTime = 10;
+pumpingProbability = 0.02;
+noiseProbability = 0.0005;
+stimulatedEmissionThreshold = 1;
+
+Stimulated 1:
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 2;
+
+Stimulated 2: (tested on 50x50 and 100x100)
+% Constant behavior input data
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 4;
+
+Stimulated 3:
+% Constant behavior input data
+TIME_STEPS = 2000;
+LATTICE_WIDTH = 70;
+LATTICE_HEIGHT = 70;
+PHOTON_SATURATION = 15;
+electronLifeTime = 30;
+photonLifeTime = 10;
+pumpingProbability = 0.2;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 6;

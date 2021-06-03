@@ -3,10 +3,10 @@ clear; % clear the workspace
 close all; % closes the windows
 
 %Constants
-TIME_STEPS = 200;
-LATTICE_WIDTH = 100;
-LATTICE_HEIGHT = 100;
-PHOTON_SATURATION = 40;
+TIME_STEPS = 800;
+LATTICE_WIDTH = 70;
+LATTICE_HEIGHT = 70;
+PHOTON_SATURATION = 15;
 
 %Initialize System
 cell.electron = 0;
@@ -21,8 +21,8 @@ prevAutomaton = currAutomaton;
 electronLifeTime = 30;
 photonLifeTime = 10;
 pumpingProbability = 0.2;
-noiseProbability = 0.01;
-stimulatedEmissionThreshold = 1;
+noiseProbability = 0.005;
+stimulatedEmissionThreshold = 6;
 
 % Oscillatory behavior input data
 %electronLifeTime = 180;
