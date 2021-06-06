@@ -1,0 +1,21 @@
+Ended simulation n.1 with: n_np = 2.350000e+01; lambda = 0.001000; averagePop = 23.875000; averagePhot = 28.105000
+Ended simulation n.2 with: n_np = 2.340000e+01; lambda = 0.001668; averagePop = 35.105000; averagePhot = 35.415000
+Found threshold at iteration 2 with lambda = 0.001668
+Ended simulation n.1 with: n_np = 25; lambda = 0.001000; averagePop = 150.240000; averagePhot = 46.255000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 3.050000e+01; lambda = 0.001000; averagePop = 216.075000; averagePhot = 75.915000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.580000e+01; lambda = 0.001000; averagePop = 222.370000; averagePhot = 73.490000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.590000e+01; lambda = 0.001000; averagePop = 244.385000; averagePhot = 65.490000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.550000e+01; lambda = 0.001000; averagePop = 252.065000; averagePhot = 64.910000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.420000e+01; lambda = 0.001000; averagePop = 224.095000; averagePhot = 72.840000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.230000e+01; lambda = 0.001000; averagePop = 250.055000; averagePhot = 64.610000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.250000e+01; lambda = 0.001000; averagePop = 237.135000; averagePhot = 66.640000
+Found threshold at iteration 1 with lambda = 0.001000
+Ended simulation n.1 with: n_np = 2.270000e+01; lambda = 0.001000; averagePop = 263.350000; averagePhot = 61.945000
+Found threshold at iteration 1 with lambda = 0.001000
