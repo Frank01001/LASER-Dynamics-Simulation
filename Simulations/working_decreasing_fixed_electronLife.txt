@@ -1,0 +1,94 @@
+Output of the simulation with the following parameters:
+int electronLifeTime = 20;
+int[] photonLifeTimeSpace = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+// logarithmic space of probability
+double[] pumpingProbabilitySpace = new double[] {-3, -2.95, -2.9, -2.85, -2.8, -2.75, -2.7, -2.65, -2.6, -2.55, -2.5, -2.44};
+// it varies from 0.00251 to 0.00141
+double noiseProbability = 0.005;
+int stimulatedEmissionThreshold = 1;
+		
+
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 2; n_np = 898.26; average photons = 985.19; average population = 89.715; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 2; n_np = 899.56; average photons = 1000.68; average population = 101.085; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 2; n_np = 899.12; average photons = 1011.79; average population = 112.705; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 2; n_np = 896.35; average photons = 1022.605; average population = 126.53; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 2; n_np = 905.35; average photons = 1050.025; average population = 144.525; lambda tested = 0.001584893192461114.
+Ended simulation n.6 after 200 time steps. Parameters: photon life = 2; n_np = 898.5; average photons = 1057.185; average population = 159.06; lambda tested = 0.0017782794100389228.
+Ended simulation n.7 after 200 time steps. Parameters: photon life = 2; n_np = 907.42; average photons = 1088.15; average population = 180.66; lambda tested = 0.001995262314968879.
+Ended simulation n.8 after 200 time steps. Parameters: photon life = 2; n_np = 898.21; average photons = 1098.94; average population = 200.61; lambda tested = 0.00223872113856834.
+Ended simulation n.9 after 200 time steps. Parameters: photon life = 2; n_np = 899.46; average photons = 1125.315; average population = 226.34; lambda tested = 0.0025118864315095794.
+ ->  Found threshold with lambda = 0.0025118864315095794
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 3; n_np = 1358.58; average photons = 1537.215; average population = 90.79; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 3; n_np = 1356.33; average photons = 1557.785; average population = 100.94; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 3; n_np = 1353.105; average photons = 1578.06; average population = 112.805; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 3; n_np = 1342.0049999999999; average photons = 1594.465; average population = 126.23; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 3; n_np = 1358.79; average photons = 1643.16; average population = 142.31; lambda tested = 0.001584893192461114.
+Ended simulation n.6 after 200 time steps. Parameters: photon life = 3; n_np = 1347.585; average photons = 1668.04; average population = 160.355; lambda tested = 0.0017782794100389228.
+Ended simulation n.7 after 200 time steps. Parameters: photon life = 3; n_np = 1347.525; average photons = 1703.14; average population = 177.925; lambda tested = 0.001995262314968879.
+ ->  Found threshold with lambda = 0.001995262314968879
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 4; n_np = 1798.8; average photons = 2059.975; average population = 88.99; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 4; n_np = 1787.7; average photons = 2085.515; average population = 99.59; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 4; n_np = 1804.82; average photons = 2145.65; average population = 113.37; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 4; n_np = 1805.7; average photons = 2184.98; average population = 126.91; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 4; n_np = 1793.26; average photons = 2217.055; average population = 141.335; lambda tested = 0.001584893192461114.
+Ended simulation n.6 after 200 time steps. Parameters: photon life = 4; n_np = 1795.68; average photons = 2272.45; average population = 159.015; lambda tested = 0.0017782794100389228.
+ ->  Found threshold with lambda = 0.0017782794100389228
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 5; n_np = 2255.225; average photons = 2610.96; average population = 90.54; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 5; n_np = 2256.65; average photons = 2657.085; average population = 100.51; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 5; n_np = 2240.4750000000004; average photons = 2690.63; average population = 112.605; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 5; n_np = 2262.425; average photons = 2773.34; average population = 128.14; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 5; n_np = 2250.3; average photons = 2819.77; average population = 142.415; lambda tested = 0.001584893192461114.
+ ->  Found threshold with lambda = 0.001584893192461114
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 6; n_np = 2712.96; average photons = 3154.085; average population = 90.505; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 6; n_np = 2702.2799999999997; average photons = 3210.09; average population = 101.55; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 6; n_np = 2694.87; average photons = 3255.86; average population = 112.465; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 6; n_np = 2697.6000000000004; average photons = 3329.48; average population = 126.55; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 6; n_np = 2698.23; average photons = 3411.93; average population = 143.26; lambda tested = 0.001584893192461114.
+ ->  Found threshold with lambda = 0.001584893192461114
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 7; n_np = 3153.465; average photons = 3679.705; average population = 89.58; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 7; n_np = 3138.31; average photons = 3738.36; average population = 100.025; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 7; n_np = 3159.3799999999997; average photons = 3841.755; average population = 113.845; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 7; n_np = 3160.535; average photons = 3928.15; average population = 127.94; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 7; n_np = 3153.3250000000003; average photons = 4009.0; average population = 143.295; lambda tested = 0.001584893192461114.
+ ->  Found threshold with lambda = 0.001584893192461114
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 8; n_np = 3597.64; average photons = 4213.24; average population = 89.725; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 8; n_np = 3619.08; average photons = 4323.525; average population = 100.975; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 8; n_np = 3598.52; average photons = 4394.32; average population = 113.425; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 8; n_np = 3603.2; average photons = 4488.55; average population = 126.97; lambda tested = 0.001412537544622754.
+Ended simulation n.5 after 200 time steps. Parameters: photon life = 8; n_np = 3592.76; average photons = 4586.035; average population = 142.49; lambda tested = 0.001584893192461114.
+ ->  Found threshold with lambda = 0.001584893192461114
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 9; n_np = 4059.36; average photons = 4767.92; average population = 90.205; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 9; n_np = 4034.745; average photons = 4849.125; average population = 101.815; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 9; n_np = 4064.085; average photons = 4975.4; average population = 114.085; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 9; n_np = 4049.955; average photons = 5071.57; average population = 127.85; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 10; n_np = 4507.3; average photons = 5295.75; average population = 89.81; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 10; n_np = 4535.55; average photons = 5449.92; average population = 101.75; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 10; n_np = 4495.5; average photons = 5507.455; average population = 112.515; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 10; n_np = 4503.349999999999; average photons = 5652.29; average population = 128.385; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 11; n_np = 4997.025; average photons = 5887.045; average population = 90.83; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 11; n_np = 4961.219999999999; average photons = 5967.09; average population = 101.155; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 11; n_np = 4994.9349999999995; average photons = 6143.395; average population = 114.685; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 11; n_np = 4919.695; average photons = 6181.47; average population = 126.35; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 12; n_np = 5401.32; average photons = 6383.415; average population = 91.25; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 12; n_np = 5411.82; average photons = 6508.25; average population = 100.085; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 12; n_np = 5424.6; average photons = 6677.64; average population = 113.885; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 12; n_np = 5422.68; average photons = 6827.15; average population = 128.695; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 13; n_np = 5851.105; average photons = 6915.915; average population = 90.53; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 13; n_np = 5845.645; average photons = 7045.855; average population = 100.245; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 13; n_np = 5856.5; average photons = 7219.46; average population = 113.535; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 13; n_np = 5832.125; average photons = 7337.355; average population = 126.35; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 14; n_np = 6308.05; average photons = 7450.715; average population = 89.425; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 14; n_np = 6298.53; average photons = 7616.69; average population = 101.555; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 14; n_np = 6310.57; average photons = 7771.57; average population = 113.045; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 14; n_np = 6303.990000000001; average photons = 7964.405; average population = 127.8; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
+Ended simulation n.1 after 200 time steps. Parameters: photon life = 15; n_np = 6722.025; average photons = 7954.24; average population = 89.605; lambda tested = 0.001.
+Ended simulation n.2 after 200 time steps. Parameters: photon life = 15; n_np = 6762.825000000001; average photons = 8170.145; average population = 101.26; lambda tested = 0.001122018454301963.
+Ended simulation n.3 after 200 time steps. Parameters: photon life = 15; n_np = 6770.325000000001; average photons = 8364.615; average population = 113.68; lambda tested = 0.0012589254117941675.
+Ended simulation n.4 after 200 time steps. Parameters: photon life = 15; n_np = 6762.0; average photons = 8540.915; average population = 127.4; lambda tested = 0.001412537544622754.
+ ->  Found threshold with lambda = 0.001412537544622754
