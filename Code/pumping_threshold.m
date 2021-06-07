@@ -20,7 +20,7 @@ prevAutomaton = currAutomaton;
 electronLifeTimeSpace = logspace(1, 2.3, 10);
 photonLifeTime = 20;
 pumpingProbabilitySpace = logspace(-3, -1, 10);
-noiseProbability = 5e-5;
+noiseProbability = 5e-4;
 stimulatedEmissionThreshold = 1;
 
 %output data
@@ -116,8 +116,8 @@ for h = 1:length(electronLifeTimeSpace)
         averagePop = mean(populationCounter);
         averagePhotons = mean(photonCounter);
 
-        if(averagePhotons > 1.25 * averagePop)
-            fprintf("Found threshold: %d", pumpingProbability);
+        if(averagePhotons > 15 * averagePop)
+            fprintf("Found threshold: %d\n", pumpingProbability);
             thresholds(h) = pumpingProbability;
             break;
         end
@@ -132,7 +132,7 @@ figure(1);
 grid on;
 hold on;
 title("Pumping Threshold by electron life time");
-plot(electronLifeTimeSpace, thresholds, 'o');
+loglog(electronLifeTimeSpace, thresholds, "o", "MarkerFaceColor", "b");
 legend('Pumping Thresholds');
 xlabel('Electron life time');
 ylabel('Pumping theshold');
