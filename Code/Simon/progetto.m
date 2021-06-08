@@ -3,9 +3,9 @@ clear; % clear the workspace
 close all; % closes the windows
 
 %Constants
-TIME_STEPS = 200;
-LATTICE_WIDTH = 100;
-LATTICE_HEIGHT = 100;
+TIME_STEPS = 1000;
+LATTICE_WIDTH = 60;
+LATTICE_HEIGHT = 60;
 PHOTON_SATURATION = 20;
 
 %Initialize System
@@ -19,14 +19,15 @@ prevAutomaton = currAutomaton;
 
 %Input data
 electronLifeTime = 30;
-photonLifeTime = 10;
-pumpingProbability = 0.2;
-noiseProbability = 0.01;
+photonLifeTime = 3;
+pumpingProbability = 0.002;
+noiseProbability = 0.005;
 stimulatedEmissionThreshold = 1;
 
 %output data
 populationCounter = zeros(1, TIME_STEPS);
 photonCounter = zeros(1, TIME_STEPS);
+noisePhotons = zeros(1, TIME_STEPS);
 
 %Time iteration
 for t = 1:TIME_STEPS
@@ -41,12 +42,12 @@ for t = 1:TIME_STEPS
         for j = 1:LATTICE_HEIGHT
             
             %Apply stimulated emission rule
-            if prevAutomaton(i, j).electron == 1 && prevAutomaton(i, j).photonCount < PHOTON_SATURATION && ...
+            if currAutomaton(i, j).electron == 1 && currAutomaton(i, j).photonCount < PHOTON_SATURATION && ...
                     mooreNeighborhood(prevAutomaton, i, j, LATTICE_WIDTH, LATTICE_HEIGHT) >= stimulatedEmissionThreshold
                 for index = 1:PHOTON_SATURATION
-                    if prevAutomaton(i, j).lifeTimes(index) == 0
+                    if currAutomaton(i, j).lifeTimes(index) == 0
                         currAutomaton(i, j).lifeTimes(index) = photonLifeTime;
-                        currAutomaton(i, j).photonCount = prevAutomaton(i, j).photonCount + 1;
+                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount + 1;
                         break;
                     end
                 end
@@ -56,25 +57,24 @@ for t = 1:TIME_STEPS
             
             %Apply photon decay
             for index = 1:PHOTON_SATURATION
-            	if prevAutomaton(i, j).lifeTimes(index) > 0
-                	currAutomaton(i, j).lifeTimes(index) = prevAutomaton(i, j).lifeTimes(index) - 1; 
+            	if currAutomaton(i, j).lifeTimes(index) > 0
+                	currAutomaton(i, j).lifeTimes(index) = currAutomaton(i, j).lifeTimes(index) - 1; 
                     if currAutomaton(i, j).lifeTimes(index) == 0
-                        currAutomaton(i, j).photonCount = prevAutomaton(i, j).photonCount - 1;
+                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount - 1;
                     end
             	end
             end
             
             %Apply electron decay
-            if prevAutomaton(i, j).electron == 1 && prevAutomaton(i, j).electronLife > 0
-                currAutomaton(i, j).electronLife = prevAutomaton(i, j).electronLife - 1;
+            if currAutomaton(i, j).electron == 1 && currAutomaton(i, j).electronLife > 0
+                currAutomaton(i, j).electronLife = currAutomaton(i, j).electronLife - 1;
                 if currAutomaton(i, j).electronLife == 0
                 	currAutomaton(i, j).electron = 0;
                 end
             end
             
             %Apply pumping rule
-            pump = rand(1);
-            if prevAutomaton(i, j).electron == 0 && pump(1) < pumpingProbability
+            if currAutomaton(i, j).electron == 0 && rand < pumpingProbability
                 currAutomaton(i, j).electron = 1;
                 currAutomaton(i, j).electronLife = electronLifeTime;
             end
@@ -82,9 +82,10 @@ for t = 1:TIME_STEPS
             %Apply noise photon
             if noise(i, j) < noiseProbability
                 for index = 1:PHOTON_SATURATION
-                    if prevAutomaton(i, j).lifeTimes(index) == 0
+                    if currAutomaton(i, j).lifeTimes(index) == 0
                         currAutomaton(i, j).lifeTimes(index) = photonLifeTime;
-                        currAutomaton(i, j).photonCount = prevAutomaton(i, j).photonCount + 1;
+                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount + 1;
+                        noisePhotons(t) = noisePhotons(t) + 1;
                         break;
                     end
                 end
@@ -108,13 +109,14 @@ end
 %Final calculations
 %Output results
 figure("Name", "First graph");
-grid on;
 hold on;
-title("Population inversion over time");
 time = linspace(1, TIME_STEPS, TIME_STEPS);
 plot(time, populationCounter);
 plot(time, photonCounter);
-legend('Population Inversion', 'Photon Count');
+plot(time, noisePhotons);
+grid on;
+legend('Population Inversion', 'Photon Count', "Noise Photons");
+title("laser Dynamics Simulation");
 xlabel('Time Step');
 ylabel('Population');
 hold off;

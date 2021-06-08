@@ -6,8 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Simulator {
 	
 	private final static int TIME_STEPS = 1000;
-	private final static int LATTICE_WIDTH = 300;
-	private final static int LATTICE_HEIGHT = 300;
+	private final static int LATTICE_WIDTH = 100;
+	private final static int LATTICE_HEIGHT = 100;
 	private final static int PHOTON_SATURATION = 20;
 	
 	static Cell[][] previousAutomaton;
@@ -32,38 +32,38 @@ public class Simulator {
 		//int numberOfTests = 10; // number of pumping thresholds to test until the correct one is found
 		
 		
-		/* // input data parameters for calculating the threshold with fixed photon life time
+		// input data parameters for calculating the threshold with fixed photon life time
 		int[] electronLifeTimeSpace = new int[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150};
 		int photonLifeTime = 3;
 		// logarithmic space of probability
-		double[] pumpingProbabilitySpace = new double[] {-4, -3.7, -3.3, -3, -2.8, -2.5, -2.3, -2, -1.5, -1}; // 10 values
+		//double[] pumpingProbabilitySpace = new double[] {-4, -3.7, -3.3, -3, -2.8, -2.5, -2.3, -2, -1.5, -1}; // 10 values
 		// parameters used for this alternative set of lambdas: noise = 0.005, photonLife = 3, saturation = 20
-		//double[] pumpingProbabilitySpace = new double[] {-2.83, -2.81, -2.79, -2.77, -2.75, -2.74, -2.73, -2.72, -2.71, -2.7, -2.69};
-		//      with this parameters, the threshold was found at about 0.001905
+		double[] pumpingProbabilitySpace = linearSpace(0.00187, 0.00188, 15);
 		
-		 */
-		
-		// input data parameters for calculating the threshold with fixed electron life time
+		/*// input data parameters for calculating the threshold with fixed electron life time
 		int electronLifeTime = 20;
 		int[] photonLifeTimeSpace = new int[] {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 		// logarithmic space of probability
-		//double[] pumpingProbabilitySpace = new double[] {-4, -3.7, -3.3, -3, -2.8, -2.5, -2.3, -2, -1.5, -1}; // 10 values
-		double[] pumpingProbabilitySpace = new double[] {-2, -1.95, -1.9, -1.85, -1.8, -1.75, -1.7, -1.65, -1.6, -1.55, -1.5, -1.44};
+		double[] pumpingProbabilitySpace = linearSpace(0.0131, 0.0255, 15);
+		 */
 		
-		double noiseProbability = 0.05;
+		double noiseProbability = 0.005;
 		int stimulatedEmissionThreshold = 1;
 		
 		// iteration on the possible values for the pumping threshold
-		for (int photonLifeTime : photonLifeTimeSpace) {
+		for (int electronLifeTime : electronLifeTimeSpace) {
 			for (int p = 0; p < pumpingProbabilitySpace.length; p++) {
 				//checks if this pumping probability is a valid threshold value
-				double pumpingProbability = Math.pow(10, pumpingProbabilitySpace[p]);
+				//double pumpingProbability = Math.pow(10, pumpingProbabilitySpace[p]); // logspace
+				double pumpingProbability = pumpingProbabilitySpace[p]; //linspace
 				
-				//int timeSteps = electronLifeTime * 10; // if the electron life time is varying
-				//if (timeSteps < 200) timeSteps = 200;
-				//else if (timeSteps > 1000) timeSteps = 1000;
+				// if the electron life time is varying
+				int timeSteps = electronLifeTime * 10;
+				if (timeSteps < 200) timeSteps = 200;
+				else if (timeSteps > 1000) timeSteps = 1000;
 				
-				int timeSteps = 200; // if the photon life time is varying
+				// if the photon life time is varying
+				//int timeSteps = 200;
 				
 				// counters initialization for the populations and the counters
 				int[] populationCounter = new int[timeSteps];
@@ -200,5 +200,15 @@ public class Simulator {
 			}
 		}
 		return count;
+	}
+	
+	private static double[] linearSpace(double start, double end, int quantity) {
+		double[] space = new double[quantity];
+		space[0] = start;
+		double delta = (end - start) / (quantity - 1);
+		for (int i = 1; i < quantity; i++) {
+			space[i] = space[i-1] + delta;
+		}
+		return space;
 	}
 }

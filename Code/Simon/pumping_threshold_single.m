@@ -5,7 +5,7 @@ close all; % closes the windows
 TIME_STEPS = 1000;
 LATTICE_WIDTH = 70;
 LATTICE_HEIGHT = 70;
-PHOTON_SATURATION = 40;
+PHOTON_SATURATION = 10;
 
 %Initialize System
 cell.electron = 0;
@@ -17,8 +17,8 @@ currAutomaton = repmat(cell, LATTICE_WIDTH, LATTICE_HEIGHT);
 prevAutomaton = currAutomaton;
 
 % Oscillatory behavior input data
-electronLifeTime = 200; %logspace(1, 2.3, 10);
-photonLifeTime = 10;
+electronLifeTime = 150; %logspace(1, 2.3, 10);
+photonLifeTime = 3;
 pumpingProbabilitySpace = logspace(-10, -2, 10); % 15 windows opened, one for each threshold tested
 noiseProbability = 5e-3;
 stimulatedEmissionThreshold = 1;
@@ -118,7 +118,7 @@ for p = 1:length(pumpingProbabilitySpace)
     averagePhotons = mean(photonCounter);
     averagePop = mean(populationCounter);
     
-    if(averagePhotons > 1.5 * n_np)
+    if(averagePhotons > 1.25 * n_np)
     	fprintf("Threshold found! lambda_threshold = %d\n", pumpingProbability);
     end
     
