@@ -26,3 +26,20 @@ xlabel("Electron Life Time");
 ylabel("Pumping Thresholds found");
 xlim([9, 170]);
 ylim([0.01868, 0.01882]);
+
+%% photons over pumping
+
+figure("Name", "Average number of photons over pumping probability");
+averagePhotons = [1126.2166666666667, 1134.56, 1145.3766666666668, 1166.15, 1180.5766666666666, 1216.9333333333334, 1238.8133333333333, 1285.9333333333334, ...
+1343.9166666666667, 1464.66, 1592.2933333333333, 1750.65, 2008.8066666666666, 2273.79, 2695.09, ...
+3280.653333333333, 4144.663333333333, 5367.776666666667, 7016.13, 9315.393333333333, 12458.876666666667, 16700.046666666665, ...
+22547.396666666667, 30537.82, 41285.86, 55178.986666666664, 71518.17666666667, 86699.72666666667, 96082.90666666666, ...
+99280.99];
+
+pumping = logspace(-4, 0, 30);
+loglog(pumping, averagePhotons);
+title("Parameters: noise = 0.005, \tau electron = 30, \tau photon = 10, 300 time steps");
+xlabel("Pumping Probability");
+ylabel("Average number of photons");
+grid on;
+
