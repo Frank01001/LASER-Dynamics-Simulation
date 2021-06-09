@@ -1,5 +1,3 @@
-package cellular.automata;
-
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -63,9 +61,6 @@ public class Simulator {
 			
 			int populationSum = 0;
 			int photonSum = 0;
-			
-			//eliminating noise after 30 time steps
-			if (t >= 10) noiseProbability = 0.0;
 			
 			for (int row = 0; row < LATTICE_WIDTH; row++) {
 				for (int col = 0; col < LATTICE_HEIGHT; col++) {
