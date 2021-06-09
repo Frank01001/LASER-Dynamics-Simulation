@@ -5,8 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Simulator {
 	
-	private final static int LATTICE_WIDTH = 150;
-	private final static int LATTICE_HEIGHT = 150;
+	public final static int LATTICE_WIDTH = 150;
+	public final static int LATTICE_HEIGHT = 150;
 	private final static int PHOTON_SATURATION = 5;
 	
 	private Cell[][] previousAutomaton;
@@ -17,6 +17,8 @@ public class Simulator {
 	public double n_np;
 	public double averagePopulation;
 	public double averagePhotons;
+	
+	public int[] populationCounter;
 	
 	
 	public void simulate(int timeSteps, int photonLifeTime, int electronLifeTime, double pumpingProbability, double noiseProbability) {
@@ -38,7 +40,7 @@ public class Simulator {
 		
 		
 		// counters initialization for the populations and the counters
-		int[] populationCounter = new int[timeSteps];
+		populationCounter = new int[timeSteps];
 		int[] photonCounter = new int[timeSteps];
 		for (int phot = 0; phot < timeSteps; phot++) {
 			populationCounter[phot] = 0;
@@ -61,6 +63,9 @@ public class Simulator {
 			
 			int populationSum = 0;
 			int photonSum = 0;
+			
+			//eliminating noise after 30 time steps
+			if (t >= 10) noiseProbability = 0.0;
 			
 			for (int row = 0; row < LATTICE_WIDTH; row++) {
 				for (int col = 0; col < LATTICE_HEIGHT; col++) {

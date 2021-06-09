@@ -6,7 +6,55 @@ public class SimulationStarter {
 	
 	public static void main(String[] args) {
 		simulator = new Simulator();
-		simulationPhotonsOverPumping();
+		simulationKVersusNNp();
+	}
+	
+	public static void simulationKVersusNNp() {
+		
+		// input data parameters for calculating the threshold with fixed electron life time
+		int[] electronLifeTimeSpace = new int[] {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150};
+		int photonLifeTime = 3;
+		// linear space of probability
+		double[] pumpingProbabilitySpace = linearSpace(0.0017, 0.0019, 20);
+		
+		
+		// iteration on the possible values for the pumping threshold
+		for (int electronLifeTime : electronLifeTimeSpace) {
+			
+			boolean check = false;
+			for (int p = 0; p < pumpingProbabilitySpace.length; p++) {
+				//checks if this pumping probability is a valid threshold value
+				double pumpingProbability = pumpingProbabilitySpace[p];
+				
+				// if the photon life time is varying
+				int timeSteps = 200;
+				
+				simulator.simulate(timeSteps, photonLifeTime, electronLifeTime, pumpingProbability, 0.005);
+				
+				System.out.println("Ended simulation n." + (p + 1) + " after " + timeSteps + " time steps. Parameters: photon life = "
+						+ photonLifeTime + "; n_np = " + simulator.n_np + "; average photons = " + simulator.averagePhotons +	"; average " +
+						"population = " + simulator.averagePopulation + "; lambda tested = " + pumpingProbability + ".");
+				
+				
+				double steadyPopulation = 0.0;
+				for (int i = timeSteps * 3 / 4, h = 0; i < timeSteps; i++, h++) {
+					steadyPopulation += simulator.populationCounter[i];
+				}
+				steadyPopulation = steadyPopulation / ((double) timeSteps / 4.0);
+				double K = 1.0 / (photonLifeTime * steadyPopulation);
+				double pumpingRate = 1.0 / (electronLifeTime *  photonLifeTime * K);
+				double estimatedPumpingThreshold = pumpingRate / (Simulator.LATTICE_HEIGHT * Simulator.LATTICE_WIDTH);
+				System.out.println("K = " + K + "; estimated pumping threshold = " + estimatedPumpingThreshold + "; pumping rate = " + pumpingRate);
+				
+				if (simulator.averagePhotons > 1.25 * simulator.n_np && !check &&
+						(estimatedPumpingThreshold - pumpingProbability) / estimatedPumpingThreshold < 0.05 ) {
+					System.out.println(" ->  Found threshold with lambda = " + pumpingProbability);
+					check = true;
+				}
+			}
+			System.out.println("");
+		}
+		
 	}
 	
 	/**
@@ -97,7 +145,7 @@ public class SimulationStarter {
 		int photonLifeTime = 3;
 		
 		// parameters used for this alternative set of lambdas: noise = 0.005, photonLife = 3, saturation = 20
-		double[] pumpingProbabilitySpace = linearSpace(0.00187, 0.00188, 15);
+		double[] pumpingProbabilitySpace = linearSpace(0.001865, 0.00188, 15);
 		
 		
 		// iteration on the possible values for the pumping threshold
@@ -113,8 +161,8 @@ public class SimulationStarter {
 				
 				simulator.simulate(timeSteps, photonLifeTime, electronLifeTime, pumpingProbability, 0.005);
 				
-				System.out.println("Ended simulation n." + (p + 1) + " after " + timeSteps + " time steps. Parameters: photon life = "
-						+ photonLifeTime + "; n_np = " + simulator.n_np + "; average photons = " + simulator.averagePhotons +	"; average " +
+				System.out.println("Ended simulation n." + (p + 1) + " after " + timeSteps + " time steps. Parameters: electron life = "
+						+ electronLifeTime + "; n_np = " + simulator.n_np + "; average photons = " + simulator.averagePhotons +	"; average " +
 						"population = " + simulator.averagePopulation + "; lambda tested = " + pumpingProbability + ".");
 				
 				if (simulator.averagePhotons > 1.25 * simulator.n_np) {
