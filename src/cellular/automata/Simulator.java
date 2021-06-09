@@ -1,3 +1,5 @@
+package cellular.automata;
+
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
