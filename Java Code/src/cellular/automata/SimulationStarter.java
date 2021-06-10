@@ -1,3 +1,5 @@
+package cellular.automata;
+
 public class SimulationStarter {
 	
 	static Simulator simulator;
@@ -114,10 +116,6 @@ public class SimulationStarter {
 
 			thresholds[n] = pumpingThr;
 		}
-
-		ThresholdChart chart = new ThresholdChart(noiseProbabilitySpace, thresholds);
-		chart.pack();
-		chart.setVisible(true);
 
 		System.out.print("noiseThresholds = [");
 		for(double th : thresholds)
