@@ -6,5 +6,5 @@ The algorithm is based on the Cellular Automata Model, and was heavily inspired 
 The repository contains both a Matlab implementation and a Java implementation. The former was created later in the project development in order to increase performance.
 
 Authors:
-Francesco Panebianco
-[Simone Giampà](https://github.com/SimonGiampy)
+- Francesco Panebianco
+- [Simone Giampà](https://github.com/SimonGiampy)
