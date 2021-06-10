@@ -1,13 +1,11 @@
-package cellular.automata;
-
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Simulator {
 	
-	public final static int LATTICE_WIDTH = 150;
-	public final static int LATTICE_HEIGHT = 150;
-	private final static int PHOTON_SATURATION = 5;
+	public static int LATTICE_WIDTH = 150;
+	public static int LATTICE_HEIGHT = 150;
+	private static int PHOTON_SATURATION = 5;
 	
 	private Cell[][] previousAutomaton;
 	
@@ -19,6 +17,7 @@ public class Simulator {
 	public double averagePhotons;
 	
 	public int[] populationCounter;
+	public int[] spontaneousEmissionPhotons;
 	
 	
 	public void simulate(int timeSteps, int photonLifeTime, int electronLifeTime, double pumpingProbability, double noiseProbability) {
@@ -162,6 +161,140 @@ public class Simulator {
 			}
 		}
 		return count;
+	}
+
+	public void advancedSimulator(int timeSteps, int photonLifeTime, int electronLifeTime, double pumpingProbability, double thermalExcitingProbability, double spontaneousEmissionProbability) {
+
+		spontaneousEmissionPhotons = new int[timeSteps];
+		for(int i = 0; i < spontaneousEmissionPhotons.length; i++) spontaneousEmissionPhotons[i] = 0;
+
+		Cell[][] automaton = new Cell[LATTICE_WIDTH][LATTICE_HEIGHT];
+		previousAutomaton = new Cell[LATTICE_WIDTH][LATTICE_HEIGHT];
+		for (int i = 0; i < LATTICE_WIDTH; i++) {
+			for (int j = 0; j < LATTICE_HEIGHT; j++) {
+				int[] photonLifeTimes = new int[PHOTON_SATURATION];
+				int[] prevPhotonLifeTimes = new int[PHOTON_SATURATION];
+				for (int phot = 0; phot < PHOTON_SATURATION; phot++) {
+					photonLifeTimes[phot] = 0;
+					prevPhotonLifeTimes[phot] = 0;
+				}
+				automaton[i][j] = new Cell(false, 0, photonLifeTimes, 0);
+				previousAutomaton[i][j] = new Cell(false, 0, prevPhotonLifeTimes, 0);
+			}
+		}
+
+
+		// counters initialization for the populations and the counters
+		populationCounter = new int[timeSteps];
+		int[] photonCounter = new int[timeSteps];
+		for (int phot = 0; phot < timeSteps; phot++) {
+			populationCounter[phot] = 0;
+			photonCounter[phot] = 0;
+		}
+
+		//iteration over time
+		for (int t = 0; t < timeSteps; t++) {
+			double[][] noiseProbabilityMatrix = new double[LATTICE_WIDTH][LATTICE_HEIGHT];
+			for (int i = 0; i < LATTICE_WIDTH; i++) {
+				for (int j = 0; j < LATTICE_HEIGHT; j++) {
+					noiseProbabilityMatrix[i][j] = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
+				}
+			}
+
+			int populationSum = 0;
+			int photonSum = 0;
+
+			for (int row = 0; row < LATTICE_WIDTH; row++) {
+				for (int col = 0; col < LATTICE_HEIGHT; col++) {
+
+					//Stimulated Emission Rule
+					if (automaton[row][col].isHigh() && automaton[row][col].getPhotonCount() < PHOTON_SATURATION &&
+							mooreNeighborhood(row, col) >= stimulatedEmissionThreshold) {
+						for (int sat = 0; sat < PHOTON_SATURATION; sat++) {
+							if (automaton[row][col].getPhotonLifeTimes(sat) == 0) {
+								automaton[row][col].setPhotonLifeTimes(photonLifeTime, sat);
+								automaton[row][col].setPhotonCount(automaton[row][col].getPhotonCount() + 1);
+								break;
+							}
+						}
+						automaton[row][col].setElectronLevel(false);
+						automaton[row][col].setElectronLifeTime(0);
+					}
+
+					//Photon Decay
+					for (int sat = 0; sat < PHOTON_SATURATION; sat++) {
+						if (automaton[row][col].getPhotonLifeTimes(sat) > 0) {
+							automaton[row][col].setPhotonLifeTimes(automaton[row][col].getPhotonLifeTimes(sat) - 1, sat);
+							if (automaton[row][col].getPhotonLifeTimes(sat) == 0) {
+								automaton[row][col].setPhotonCount(automaton[row][col].getPhotonCount() - 1);
+							}
+						}
+					}
+
+					//Electron Decay
+					if (automaton[row][col].isHigh() && automaton[row][col].getElectronLifeTime() > 0) {
+						automaton[row][col].setElectronLifeTime(automaton[row][col].getElectronLifeTime() - 1);
+						if (automaton[row][col].getElectronLifeTime() == 0) {
+							automaton[row][col].setElectronLevel(false);
+						}
+					}
+
+					//Pumping Rule
+					if (!automaton[row][col].isHigh() && noiseProbabilityMatrix[row][col] < pumpingProbability) {
+						automaton[row][col].setElectronLevel(true);
+						automaton[row][col].setElectronLifeTime(electronLifeTime);
+					}
+
+					//Divided Thermal Exciting and spontaneous emission probability
+					if (!automaton[row][col].isHigh() && noiseProbabilityMatrix[row][col] < thermalExcitingProbability)
+					{
+						automaton[row][col].setElectronLevel(true);
+						automaton[row][col].setElectronLifeTime(electronLifeTime);
+					}
+					else if (automaton[row][col].isHigh() && noiseProbabilityMatrix[row][col] < spontaneousEmissionProbability)
+					{
+						for (int index = 0; index < PHOTON_SATURATION; index++)
+						{
+							if (automaton[row][col].getPhotonLifeTimes(index) == 0)
+							{
+								automaton[row][col].setElectronLevel(false);
+								automaton[row][col].setElectronLifeTime(0);
+								automaton[row][col].setPhotonLifeTimes(photonLifeTime, index);
+								automaton[row][col].setPhotonCount(automaton[row][col].getPhotonCount() + 1);
+								spontaneousEmissionPhotons[t] = spontaneousEmissionPhotons[t] + 1;
+								break;
+							}
+						}
+					}
+
+					populationSum += (automaton[row][col].isHigh() ? 1 : 0);
+					photonSum += automaton[row][col].getPhotonCount();
+				}
+			}
+
+			// updating counters over time
+			populationCounter[t] = populationSum;
+			photonCounter[t] = photonSum;
+
+
+			// previousAutomaton = automaton;
+			for (int i = 0; i < LATTICE_WIDTH; i++) {
+				for (int j = 0; j < LATTICE_HEIGHT; j++) {
+					int[] photonLifeTimes = new int[PHOTON_SATURATION];
+					for (int phot = 0; phot < PHOTON_SATURATION; phot++) {
+						photonLifeTimes[phot] = automaton[i][j].getPhotonLifeTimes(phot);
+					}
+					previousAutomaton[i][j] = new Cell(automaton[i][j].isHigh(),
+							automaton[i][j].getElectronLifeTime(), photonLifeTimes, automaton[i][j].getPhotonCount());
+				}
+			}
+
+		}
+
+		n_np = (double) Arrays.stream(spontaneousEmissionPhotons).sum() / timeSteps * photonLifeTime;
+		averagePhotons = (double) Arrays.stream(photonCounter).sum() / timeSteps;
+		averagePopulation = (double) Arrays.stream(populationCounter).sum() / timeSteps;
+
 	}
 	
 	

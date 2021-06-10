@@ -1,5 +1,3 @@
-package cellular.automata;
-
 public class Cell {
 	
 	private boolean electron;

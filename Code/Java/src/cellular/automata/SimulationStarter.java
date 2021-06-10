@@ -1,25 +1,55 @@
-package cellular.automata;
-
 public class SimulationStarter {
 	
 	static Simulator simulator;
 	
 	public static void main(String[] args) {
 		simulator = new Simulator();
-		simThresholdOverNoise();
+		thresholdAdvanced();
 	}
-	
+
+	public static void thresholdAdvanced()
+	{
+		// input data parameters for calculating the threshold with fixed photon life time
+		int electronLifeTime = 100;
+		int photonLifeTime = 16;
+		int timeSteps = 200;
+
+		// parameters used for this alternative set of lambdas: noise = 0.005, photonLife = 3, saturation = 20
+		double[] pumpingProbabilitySpace = linearSpace(9.7E-4, 1E-3, 30);
+
+		Simulator.LATTICE_WIDTH = 100;
+		Simulator.LATTICE_HEIGHT = 100;
+
+		// iteration on the possible values for the pumping threshold
+		for (int p = 0; p < pumpingProbabilitySpace.length; p++) {
+			//checks if this pumping probability is a valid threshold value
+			double pumpingProbability = pumpingProbabilitySpace[p];
+
+			simulator.advancedSimulator(timeSteps, photonLifeTime, electronLifeTime, pumpingProbability, 0.00001, 0.0005);
+
+			System.out.println("Ended simulation n." + (p + 1) + " after " + timeSteps + " time steps. Parameters: electron life = "
+					+ electronLifeTime + "; n_np = " + simulator.n_np + "; average photons = " + simulator.averagePhotons +	"; average " +
+					"population = " + simulator.averagePopulation + "; lambda tested = " + pumpingProbability + ".");
+
+			if (simulator.averagePhotons > 1.25 * simulator.n_np) {
+				System.out.println(" ->  Found threshold with lambda = " + pumpingProbability);
+				break;
+			}
+
+		}
+	}
+
 	public static void simStimEmTh() {
 		int electronLifeTime = 30;
 		int photonLifeTime = 10;
 		double noiseProbability = 0.0009;
 		int timeSteps = 1000;
-		
+
 		int[] stimulatedEmissionThresholdSpace = {1, 2, 3, 4};
 		double[] pumpingProbabilitySpace = logspace(-5, 0, 20);
-		
+
 		double[] thresholds = new double[stimulatedEmissionThresholdSpace.length];
-		
+
 		for(int n = 0; n < stimulatedEmissionThresholdSpace.length; n++)
 		{
 			double pumpingThr = 0.0f;
@@ -27,65 +57,74 @@ public class SimulationStarter {
 			{
 				double pumpingProbability = pumpingProbabilitySpace[p]; // logspace
 				int stimulatedEmissionThreshold = stimulatedEmissionThresholdSpace[n];
-				
+
 				simulator.stimulatedEmissionThreshold = stimulatedEmissionThreshold;
 				simulator.simulate(timeSteps, photonLifeTime, electronLifeTime, pumpingProbability, noiseProbability);
 				System.out.println("Simulation n. " + (p + 1));
-				
+
 				if(simulator.averagePhotons > 1.25 * simulator.n_np)
 				{
 					System.out.println("Threshold found: " + pumpingProbability + "\n");
 					pumpingThr = pumpingProbability;
 					break;
 				}
-				
+
 			}
-			
+
 			thresholds[n] = pumpingThr;
 		}
-		
+
 		System.out.print("stimEmThresholds = [");
 		for(double th : thresholds)
 		{
 			System.out.print(th + ", ");
 		}
-		
+
 	}
-	
+
 	public static void simThresholdOverNoise() {
 		int electronLifeTime = 30;
 		int photonLifeTime = 10;
 		int timeSteps = 200;
-		
-		double[] noiseProbabilitySpace = logspace(-5.5, -2, 50);
-		double[] pumpingProbabilitySpace = logspace(-6.5, -2, 50);
-		
+
+		double[] noiseProbabilitySpace = linearSpace(0.0001, 0.01, 30);
+		double[] pumpingProbabilitySpace = logspace(-6, -1, 50);
+
 		double[] thresholds = new double[noiseProbabilitySpace.length];
-		
-		for(int n = 0; n < noiseProbabilitySpace.length; n++) {
+
+		for(int n = 0; n < noiseProbabilitySpace.length; n++)
+		{
 			double pumpingThr = 0.0f;
-			for (int p = 0; p < pumpingProbabilitySpace.length; p++) {
-				double pumpingProbability = pumpingProbabilitySpace[p];
+			for (int p = 0; p < pumpingProbabilitySpace.length; p++)
+			{
+				double pumpingProbability = pumpingProbabilitySpace[p]; // logspace
 				double noiseProbability = noiseProbabilitySpace[n];
-				
+
 				simulator.simulate(timeSteps, photonLifeTime, electronLifeTime, pumpingProbability, noiseProbability);
-				//System.out.println("Simulation n. " + (p + 1));
-				
-				if(simulator.averagePhotons > 1.25 * simulator.n_np) {
-					System.out.println("Threshold found: " + pumpingProbability + " after " + p + " simulations.");
+				System.out.println("Simulation n. " + (p + 1));
+
+				if(simulator.averagePhotons > 1.25 * simulator.n_np)
+				{
+					System.out.println("Threshold found: " + pumpingProbability + "\n");
 					pumpingThr = pumpingProbability;
 					break;
 				}
+
 			}
-			
+
 			thresholds[n] = pumpingThr;
 		}
-		
+
+		ThresholdChart chart = new ThresholdChart(noiseProbabilitySpace, thresholds);
+		chart.pack();
+		chart.setVisible(true);
+
 		System.out.print("noiseThresholds = [");
-		for(double th : thresholds){
+		for(double th : thresholds)
+		{
 			System.out.print(th + ", ");
 		}
-		System.out.println("];");
+
 	}
 	
 	public static void simulationKVersusNNp() {

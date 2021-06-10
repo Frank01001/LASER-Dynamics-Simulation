@@ -1,12 +1,11 @@
 clear; % clear the workspace
-%clc; % clears the command window
 close all; % closes the windows
 
 %Constants
-TIME_STEPS = 1000;
-LATTICE_WIDTH = 60;
-LATTICE_HEIGHT = 60;
-PHOTON_SATURATION = 20;
+TIME_STEPS = 20;
+LATTICE_WIDTH = 100;
+LATTICE_HEIGHT = 100;
+PHOTON_SATURATION = 25;
 
 %Initialize System
 cell.electron = 0;
@@ -17,17 +16,19 @@ cell.lifeTimes = zeros(1, PHOTON_SATURATION);
 currAutomaton = repmat(cell, LATTICE_WIDTH, LATTICE_HEIGHT);
 prevAutomaton = currAutomaton;
 
-%Input data
-electronLifeTime = 30;
-photonLifeTime = 3;
-pumpingProbability = 0.002;
-noiseProbability = 0.005;
+% Input Data
+electronLifeTime = 100;
+photonLifeTime = 16;
+pumpingProbability = 0.0125;
+noiseProbability = 0.0001;
 stimulatedEmissionThreshold = 1;
 
 %output data
 populationCounter = zeros(1, TIME_STEPS);
 photonCounter = zeros(1, TIME_STEPS);
 noisePhotons = zeros(1, TIME_STEPS);
+
+wb = waitbar(0, "Simulation Progress");
 
 %Time iteration
 for t = 1:TIME_STEPS
@@ -47,7 +48,7 @@ for t = 1:TIME_STEPS
                 for index = 1:PHOTON_SATURATION
                     if currAutomaton(i, j).lifeTimes(index) == 0
                         currAutomaton(i, j).lifeTimes(index) = photonLifeTime;
-                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount + 1;
+                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount + 1; 
                         break;
                     end
                 end
@@ -60,14 +61,14 @@ for t = 1:TIME_STEPS
             	if currAutomaton(i, j).lifeTimes(index) > 0
                 	currAutomaton(i, j).lifeTimes(index) = currAutomaton(i, j).lifeTimes(index) - 1; 
                     if currAutomaton(i, j).lifeTimes(index) == 0
-                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount - 1;
+                        currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount - 1; 
                     end
             	end
             end
             
             %Apply electron decay
             if currAutomaton(i, j).electron == 1 && currAutomaton(i, j).electronLife > 0
-                currAutomaton(i, j).electronLife = currAutomaton(i, j).electronLife - 1;
+                currAutomaton(i, j).electronLife = currAutomaton(i, j).electronLife - 1; 
                 if currAutomaton(i, j).electronLife == 0
                 	currAutomaton(i, j).electron = 0;
                 end
@@ -102,21 +103,24 @@ for t = 1:TIME_STEPS
     populationCounter(t) = populationSum;
     photonCounter(t) = photonSum;
     
+    progressString = sprintf("Time %d ps | %3.2f%%", t, (t / TIME_STEPS * 100));
+    waitbar((t / TIME_STEPS), wb, progressString);
+    
     %Update state
     prevAutomaton = currAutomaton;
 end
 
 %Final calculations
 %Output results
-figure("Name", "First graph");
+figure(1);
+grid on;
 hold on;
+title("Population inversion over time");
 time = linspace(1, TIME_STEPS, TIME_STEPS);
 plot(time, populationCounter);
 plot(time, photonCounter);
 plot(time, noisePhotons);
-grid on;
-legend('Population Inversion', 'Photon Count', "Noise Photons");
-title("laser Dynamics Simulation");
+legend('Population Inversion', 'Photon Count', 'New Noise Photons');
 xlabel('Time Step');
 ylabel('Population');
 hold off;

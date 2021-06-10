@@ -7,7 +7,7 @@ accuracy = input("Type in simulation accuracy (Low, Medium, High, Ultra):", "s")
 PHOTON_SATURATION = input("Enter maximum number of photons contained in a cell:");
 electronLifeTime = input("Insert carrier life time in ps:");
 photonLifeTime = input("Insert cavity life time in ps:");
-pumpingRate = input("Enter Pumping rate (atoms/s):");
+pumpingRate = input("Enter Pumping rate (electrons/ps):");
 thermalExcitingProbability = input("Enter probability that in each time step thermal excitation can occur:");
 spontaneousEmissionProbability = input("Enter probability that in each time step spontaneous emission can occur:");
 stimulatedEmissionThreshold = 1;
@@ -29,7 +29,7 @@ switch(lower(accuracy))
 end
 
 %Calculate pumping
-pumpingProbability = (pumpingRate * 10^(-12)) / (LATTICE_WIDTH * LATTICE_HEIGHT);
+pumpingProbability = pumpingRate / (LATTICE_WIDTH * LATTICE_HEIGHT);
 fprintf("Pumping prob. set at %d\n", pumpingProbability);
 
 %Initialize System
@@ -134,13 +134,6 @@ for t = 1:TIME_STEPS
     %Update state
     prevAutomaton = currAutomaton;
 end
-
-%steadyStatePopulationSamples = populationCounter(1, (TIME_STEPS * 3 / 4):TIME_STEPS);
-%steadyStatePopulation = mean(steadyStatePopulationSamples);
-%K = 1 / (steadyStatePopulation * photonLifeTime);
-%pumpingRateThr = 1 / (K * photonLifeTime * electronLifeTime);
-%fprintf("The estimated K is %d\n", K);
-%fprintf("The estimated pumping rate threshold is %d\n", pumpingRateThr);
 
 %Final calculations
 %Output results
