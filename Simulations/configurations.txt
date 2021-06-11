@@ -1,3 +1,5 @@
+Main plots with standard configuration parameters, changed differently in order to see what happens if certain values change
+
 Standard 1:
 % Constant behavior input data
 electronLifeTime = 30;
@@ -37,6 +39,9 @@ photonLifeTime = 10;
 pumpingProbability = 0.001;
 noiseProbability = 0.00001;
 stimulatedEmissionThreshold = 1;
+
+--------------------------------------------------------------------------------
+Another set of plots with various parameters
 
 Constant 1: -> very high lasering
 % Constant behavior input data
@@ -83,6 +88,7 @@ pumpingProbability = 0.2;
 noiseProbability = 0.005;
 stimulatedEmissionThreshold = 1;
 
+------------------------------------------------------------
 Oscillatory 1:
 % Oscilaltory behavior input data
 electronLifeTime = 100;
@@ -90,6 +96,9 @@ photonLifeTime = 10;
 pumpingProbability = 0.02;
 noiseProbability = 0.0005;
 stimulatedEmissionThreshold = 1;
+
+------------------------------------------------------------
+<Stimulated>: representation of what happens if we change the stimulated emission threshold
 
 Stimulated 1:
 % Constant behavior input data
