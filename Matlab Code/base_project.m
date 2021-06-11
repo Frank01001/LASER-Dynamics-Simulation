@@ -43,10 +43,10 @@ for t = 1:TIME_STEPS
         for j = 1:LATTICE_HEIGHT
             
             %Apply stimulated emission rule
-            if currAutomaton(i, j).electron == 1 && currAutomaton(i, j).photonCount < PHOTON_SATURATION && ...
+            if prevAutomaton(i, j).electron == 1 && prevAutomaton(i, j).photonCount < PHOTON_SATURATION && ...
                     mooreNeighborhood(prevAutomaton, i, j, LATTICE_WIDTH, LATTICE_HEIGHT) >= stimulatedEmissionThreshold
                 for index = 1:PHOTON_SATURATION
-                    if currAutomaton(i, j).lifeTimes(index) == 0
+                    if prevAutomaton(i, j).lifeTimes(index) == 0
                         currAutomaton(i, j).lifeTimes(index) = photonLifeTime;
                         currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount + 1; 
                         break;
@@ -58,7 +58,7 @@ for t = 1:TIME_STEPS
             
             %Apply photon decay
             for index = 1:PHOTON_SATURATION
-            	if currAutomaton(i, j).lifeTimes(index) > 0
+            	if prevAutomaton(i, j).lifeTimes(index) > 0
                 	currAutomaton(i, j).lifeTimes(index) = currAutomaton(i, j).lifeTimes(index) - 1; 
                     if currAutomaton(i, j).lifeTimes(index) == 0
                         currAutomaton(i, j).photonCount = currAutomaton(i, j).photonCount - 1; 
@@ -67,7 +67,7 @@ for t = 1:TIME_STEPS
             end
             
             %Apply electron decay
-            if currAutomaton(i, j).electron == 1 && currAutomaton(i, j).electronLife > 0
+            if prevAutomaton(i, j).electron == 1 && prevAutomaton(i, j).electronLife > 0
                 currAutomaton(i, j).electronLife = currAutomaton(i, j).electronLife - 1; 
                 if currAutomaton(i, j).electronLife == 0
                 	currAutomaton(i, j).electron = 0;
@@ -75,7 +75,7 @@ for t = 1:TIME_STEPS
             end
             
             %Apply pumping rule
-            if currAutomaton(i, j).electron == 0 && rand < pumpingProbability
+            if prevAutomaton(i, j).electron == 0 && rand < pumpingProbability
                 currAutomaton(i, j).electron = 1;
                 currAutomaton(i, j).electronLife = electronLifeTime;
             end
@@ -110,19 +110,22 @@ for t = 1:TIME_STEPS
     prevAutomaton = currAutomaton;
 end
 
+close(wb); % closes wait bar after simulation is completed
+
 %Final calculations
 %Output results
 figure(1);
-grid on;
+
 hold on;
-title("Population inversion over time");
+title("Laser Dynamics over time");
 time = linspace(1, TIME_STEPS, TIME_STEPS);
 plot(time, populationCounter);
 plot(time, photonCounter);
 plot(time, noisePhotons);
 legend('Population Inversion', 'Photon Count', 'New Noise Photons');
-xlabel('Time Step');
-ylabel('Population');
+grid on;
+xlabel('Time [ps]');
+ylabel('Simulation variables');
 hold off;
 
 
