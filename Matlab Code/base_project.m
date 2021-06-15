@@ -2,10 +2,10 @@ clear; % clear the workspace
 close all; % closes the windows
 
 %Constants
-TIME_STEPS = 20;
-LATTICE_WIDTH = 100;
-LATTICE_HEIGHT = 100;
-PHOTON_SATURATION = 25;
+TIME_STEPS = 1000;
+LATTICE_WIDTH = 200;
+LATTICE_HEIGHT = 200;
+PHOTON_SATURATION = 15;
 
 %Initialize System
 cell.electron = 0;
@@ -17,10 +17,10 @@ currAutomaton = repmat(cell, LATTICE_WIDTH, LATTICE_HEIGHT);
 prevAutomaton = currAutomaton;
 
 % Input Data
-electronLifeTime = 100;
-photonLifeTime = 16;
+electronLifeTime = 180;
+photonLifeTime = 10;
 pumpingProbability = 0.0125;
-noiseProbability = 0.0001;
+noiseProbability = 0.00005;
 stimulatedEmissionThreshold = 1;
 
 %output data

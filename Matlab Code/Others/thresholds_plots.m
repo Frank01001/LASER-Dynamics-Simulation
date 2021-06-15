@@ -2,17 +2,26 @@ clear;
 close all;
 
 %% photon lifetime varies with fixed electron life time
+clear;
+close all;
 figure("Name", "Dependence of the threshold on the lifetime of a photon");
 tau_photon = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
 lambdas = [0.0255, 0.0193, 0.01753, 0.01576, 0.01576, 0.01487, 0.01487, 0.01487,...
     0.01399, 0.01399 , 0.01399, 0.01399, 0.01399, 0.0135];
+hold on;
+x = linspace(1, 17, 1000);
+y = 1./(2.3792 * x * 20) + 0.0122;
+%y = 1./(0.8 * x * 20);
 semilogy(tau_photon, lambdas, "-o", "MarkerFaceColor", "b");
+semilogy(x, y, "--k");
 title("Parameters used: \tau electron = 20; noise = 0.05");
+legend("Simulation data", "Expected Model Curve");
 grid on;
-xlabel("Photon Life Time");
-ylabel("Pumping Thresholds found");
+xlabel("Photon Life Time [ps]");
+ylabel("Pumping Thresholds");
 xlim([1, 16]);
 ylim([0.012, 0.027]);
+hold off;
 
 %% electron life time varies with fixed photon life time
 figure("Name", "Dependence of the threshold on the lifetime of an electron");
@@ -28,19 +37,39 @@ xlim([9, 170]);
 ylim([0.01868, 0.01882]);
 
 %% photons over pumping
-
+clear;
 figure("Name", "Average number of photons over pumping probability");
-averagePhotons = [1126.2166666666667, 1134.56, 1145.3766666666668, 1166.15, 1180.5766666666666, 1216.9333333333334, 1238.8133333333333, 1285.9333333333334, ...
+
+avgPhotonsX1 = [1126.2166666666667, 1134.56, 1145.3766666666668, 1166.15, 1180.5766666666666, 1216.9333333333334, 1238.8133333333333, 1285.9333333333334, ...
 1343.9166666666667, 1464.66, 1592.2933333333333, 1750.65, 2008.8066666666666, 2273.79, 2695.09, ...
 3280.653333333333, 4144.663333333333, 5367.776666666667, 7016.13, 9315.393333333333, 12458.876666666667, 16700.046666666665, ...
 22547.396666666667, 30537.82, 41285.86, 55178.986666666664, 71518.17666666667, 86699.72666666667, 96082.90666666666, ...
 99280.99];
 
+avgPhotonsX10 = [1129.1066666666666, 1138.4266666666667, 1148.9966666666667, 1163.1966666666667, 1184.1566666666668, 1197.9933333333333, 1241.3033333333333, 1295.57, ...
+1365.96, 1471.7333333333333, 1585.2733333333333, 1758.18, 2017.0866666666666, 2303.5533333333333, 2744.97, ...
+3323.1633333333334, 4154.956666666667, 5372.63, 7022.006666666667, 9349.036666666667, 12470.473333333333, 16721.36, ...
+22500.98, 30483.346666666668, 41268.863333333335, 55179.89333333333, 71515.87, 86696.93666666666, 96036.72333333333, ...
+99224.29];
+
+avgPhotonsDiv10 = [1126.56, 1140.43, 1132.8766666666668, 1146.7733333333333, 1179.2233333333334, 1206.1366666666668, 1245.5966666666666, 1293.41, ...
+1357.3166666666666, 1463.1866666666667, 1579.0233333333333, 1754.03, 2018.22, 2217.7266666666665, 2440.4766666666665, ...
+2836.81, 3443.38, 4627.406666666667, 6469.706666666667, 9015.033333333333, 12266.283333333333, 16491.4, ...
+22339.646666666667, 30300.083333333332, 40927.276666666665, 54730.14, 70686.43, 85644.46333333333, 95477.65666666666, ...
+99245.07666666666];
+
 pumping = logspace(-4, 0, 30);
-loglog(pumping, averagePhotons);
-title("Parameters: noise = 0.005, \tau electron = 30, \tau photon = 10, 300 time steps");
+hold on;
+loglog(pumping, avgPhotonsX1);
+loglog(pumping, avgPhotonsX10);
+loglog(pumping, avgPhotonsDiv10);
+title("Average number of photons over pumping probability, with noise = 0.5%");
+legend("Parameters: noise = 0.005, \tau_a = 30, \tau_c = 10", ...
+    "Parameters: noise = 0.005, \tau_a = 300, \tau_c = 10", ...
+    "Parameters: noise = 0.005, \tau_a = 3, \tau_c = 10");
 xlabel("Pumping Probability");
 ylabel("Average number of photons");
+hold off;
 grid on;
 
 %% test
